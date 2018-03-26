@@ -1,0 +1,166 @@
+<html>
+<style>
+    body{
+        
+        background-image:url("666.png");
+    }
+    .card{
+        width:500px;
+
+        padding:10px;
+        margin:10px;
+        display:inline-block;
+        border-radius:10px;
+        box-shadow:blue 20px 20px 20px;
+        background-color:black;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+        transform: rotate3d(1, 1, 1, 355deg);
+    }
+    h1{
+        color:white;
+        font-style:Bree serif;
+        text-shadow:red 2px 2px;
+
+    }
+    h3{
+        color:black;
+        font-style:oblique;
+        text-shadow:red 2px 2px;
+
+    }
+    .card:hover {
+    background-color: white;
+    transform: rotate3d(1, 1, 1, 360deg);
+    }
+
+    p{
+        color:white;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    img{
+        width:90%;
+        margin:5px;
+        border-radius:10px;
+        box-shadow:black 5px 5px 5px;
+    }
+    a{
+        color:red;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    b{
+        color:orange;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    c{
+        color:gold;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    d{
+        color:green;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    f{
+        color:blue;
+        font-size:14pt;
+        font-style:oblique;
+    }
+    g{
+        color:purple;
+        font-size:14pt;
+        font-style:oblique;
+    }
+</style>
+        
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+<script type= "text/template" id="boroughTemplate">
+
+        <div class='card'>
+          <h1> {{borough}} </h1>
+          <a>  category: </a><b>{{category}} </b><hr>
+          <a>  enteredon: </a><c>{{enteredon}} </c><hr>
+          <a>  enddatetime:</a><d>{{enddatetime}} </d><hr>
+          <a>  eventagency:</a><f>{{eventagency}} </f><hr>
+          <a>  eventid: </a><g>{{eventid}} </g><hr>
+          <a>  eventtype:</a><b>{{eventtype}} </b></hr>
+          <a>  policeprecinct_s:</a><c>{{policeprecinct_s}} </c><hr>
+          <a>  startdatetime:</a><d>{{startdatetime}} </d><hr>
+          <a>  subcategoryname:</a><f>{{subcategoryname}} </f><hr>
+          <a>  zipcode_s:</a><g>{{zipcode_s}} </g>
+
+        </div>
+
+</script>
+
+<script>
+
+    var data="";
+
+    function loadJSON(){                
+        $.getJSON("https://data.cityofnewyork.us/resource/6aka-uima.json",function(results){
+            data = results;
+        })
+    }
+    
+    function search(){
+        var build = "";
+        
+        
+        var borough = document.getElementById("borough");    
+        var output = document.getElementById("output");
+        var boroughTemplate = document.getElementById("boroughTemplate").innerHTML;
+        
+        for(var index = 0; index < data.length; index++){
+           if(data[index].borough.toUpperCase().indexOf(borough.value.toUpperCase()) != -1
+          ){
+            build += Mustache.render(boroughTemplate, data[index]);
+          
+          }
+        }    
+        output.innerHTML = build;    
+    }
+
+    
+    </script>
+<body onload="loadJSON()">
+
+    <center><h1>Film Permits</h1>
+    <h3>by TszHin Lam,TingYe Lin</h3>
+
+    <input type="text" id="borough" placeholder="Enter Borough type">
+    
+    <button onclick="search()">Search</button>
+    <div id="output">
+        <div class='card'>
+          <h1> Borough </h1>
+          <a>  Category </a><hr>
+          <b>  Enddatetime </b><hr>
+          <c>  Enteredon </c><hr>
+          <d>  Eventagency </d><hr>
+          <f>  Eventid </f><hr>
+          <g>  Eventtype </g><hr>
+          <a>  Policeprecinct_s </a><hr>
+          <b>  Startdatetime </b><hr>
+          <c>  Subcategoryname </c><hr>
+          <d>  Zipcode_s  </d>
+        </div>
+</center>    
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
